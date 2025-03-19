@@ -32,7 +32,7 @@ function dateToTimestamp(date) {
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
 function getTime(date) {
-  return date.toLocaleTimeString();
+  return date.toTimeString().split(' ')[0];
 }
 
 /**
@@ -46,8 +46,36 @@ function getTime(date) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const day = new Date(date);
+  const dayOfWeek = day.getDay();
+  let currentDay = '';
+  switch (dayOfWeek) {
+    case 0:
+      currentDay = 'Sunday';
+      break;
+    case 1:
+      currentDay = 'Monday';
+      break;
+    case 2:
+      currentDay = 'Tuesday';
+      break;
+    case 3:
+      currentDay = 'Wendsday';
+      break;
+    case 4:
+      currentDay = 'Thursday';
+      break;
+    case 5:
+      currentDay = 'Friday';
+      break;
+    case 6:
+      currentDay = 'Saturday';
+      break;
+    default:
+      currentDay = 'No such a day!';
+  }
+  return currentDay;
 }
 
 /**
