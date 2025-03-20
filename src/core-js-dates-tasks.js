@@ -226,8 +226,70 @@ function isDateInPeriod(date, period) {
  * '1999-01-05T02:20:00.000Z' => '1/5/1999, 2:20:00 AM'
  * '2010-12-15T22:59:00.000Z' => '12/15/2010, 10:59:00 PM'
  */
-function formatDate(/* date */) {
-  throw new Error('Not implemented');
+function formatDate(date) {
+  const date1 = new Date(date);
+  const PM = 'PM';
+  const AM = 'AM';
+  const dateNumber = date1.getUTCDate();
+  const monthNumber = date1.getUTCMonth() + 1;
+  const yearNumber = date1.getUTCFullYear();
+  const format1 = `${monthNumber}/${dateNumber}/${yearNumber}`;
+  let hoursNumber = date1.getUTCHours();
+  let minutesNumber = date1.getUTCMinutes();
+  if (minutesNumber < 10) {
+    minutesNumber = `0${minutesNumber}`;
+  }
+  let secondsNumber = date1.getUTCSeconds();
+  if (secondsNumber < 10) {
+    secondsNumber = `0${secondsNumber}`;
+  }
+
+  if (hoursNumber < 12) {
+    secondsNumber += ` ${AM}`;
+  } else {
+    secondsNumber += ` ${PM}`;
+  }
+  const tempHours = hoursNumber;
+  switch (hoursNumber) {
+    case 13:
+      hoursNumber = 1;
+      break;
+    case 14:
+      hoursNumber = 2;
+      break;
+    case 15:
+      hoursNumber = 3;
+      break;
+    case 16:
+      hoursNumber = 4;
+      break;
+    case 17:
+      hoursNumber = 5;
+      break;
+    case 18:
+      hoursNumber = 6;
+      break;
+    case 19:
+      hoursNumber = 7;
+      break;
+    case 20:
+      hoursNumber = 8;
+      break;
+    case 21:
+      hoursNumber = 9;
+      break;
+    case 22:
+      hoursNumber = 10;
+      break;
+    case 23:
+      hoursNumber = 11;
+      break;
+    default:
+      hoursNumber = tempHours;
+  }
+  const format2 = `${hoursNumber}:${minutesNumber}:${secondsNumber}`;
+
+  return `${format1}, ${format2}`;
 }
 
 /**
