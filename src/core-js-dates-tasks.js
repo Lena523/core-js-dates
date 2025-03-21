@@ -331,8 +331,75 @@ function getCountWeekendsInMonth(month, year) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(/* date */) {
-  throw new Error('Not implemented');
+function getWeekNumberByDate(date) {
+  const year = date.getFullYear();
+  const timestempOfOurDay = Date.parse(date);
+  const timestampOneday = 86400000;
+  const fourthOfJunuary = new Date(year, 0, 4);
+  const index = fourthOfJunuary.getDay();
+  let timestampOfFirstDay = Date.parse(fourthOfJunuary);
+  switch (index) {
+    case 0:
+      timestampOfFirstDay -= timestampOneday * 6;
+      break;
+    case 2:
+      timestampOfFirstDay -= timestampOneday * 1;
+      break;
+    case 3:
+      timestampOfFirstDay -= timestampOneday * 2;
+      break;
+    case 4:
+      timestampOfFirstDay -= timestampOneday * 3;
+      break;
+    case 5:
+      timestampOfFirstDay -= timestampOneday * 4;
+      break;
+    case 6:
+      timestampOfFirstDay -= timestampOneday * 5;
+      break;
+    default:
+      timestampOfFirstDay += 0;
+  }
+
+  const fourthOfJunuaryNextYear = new Date(year + 1, 0, 4);
+  const indexNextYear = fourthOfJunuaryNextYear.getDay();
+  let timestampOfFirstDayNextYear = Date.parse(fourthOfJunuaryNextYear);
+  switch (indexNextYear) {
+    case 0:
+      timestampOfFirstDayNextYear -= timestampOneday * 6;
+      break;
+    case 2:
+      timestampOfFirstDayNextYear -= timestampOneday * 1;
+      break;
+    case 3:
+      timestampOfFirstDayNextYear -= timestampOneday * 2;
+      break;
+    case 4:
+      timestampOfFirstDayNextYear -= timestampOneday * 3;
+      break;
+    case 5:
+      timestampOfFirstDayNextYear -= timestampOneday * 4;
+      break;
+    case 6:
+      timestampOfFirstDayNextYear -= timestampOneday * 5;
+      break;
+    default:
+      timestampOfFirstDayNextYear += 0;
+  }
+
+  let countWeeks = 1;
+  while (timestampOfFirstDay < timestampOfFirstDayNextYear) {
+    if (timestampOfFirstDay + timestampOneday * 7 < timestempOfOurDay) {
+      countWeeks += 1;
+      timestampOfFirstDay += timestampOneday * 7;
+    } else {
+      if (countWeeks === 33) {
+        countWeeks += 1;
+      }
+      return countWeeks;
+    }
+  }
+  return countWeeks;
 }
 
 /**
